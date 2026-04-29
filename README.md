@@ -1,7 +1,7 @@
 # Ex. No:1b 			Study of Client Server Chat Applications
 
 ## Aim: 
-To perform a study on Client Server Chat Applications
+To implement the program on Client Server Chat Applications
 ## Introduction:
 Client-server chat applications are a category of networked software that enables real-time communication between users over a network. This study explores the key components, architecture, and considerations in the development of client-server chat applications, highlighting their significance and common implementation practices.
 Client-server chat applications are software systems that enable real-time communication between users over a network. These applications follow a client-server model, where one component (the server) manages connections and facilitates communication, while the other component (the client) interacts with the server to send and receive messages. Below are the fundamental aspects and components involved in the basics of client-server chat applications:
@@ -73,6 +73,48 @@ Client-server chat applications are versatile tools that facilitate real-time co
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 
+## program:
+```
+import socket
+import threading
+def run_server():
+    server = socket.socket()
+    host = socket.gethostname()
+    port = 8080
+
+    server.bind((host, port))
+    server.listen(1)
+
+    print("Server running on", host)
+    conn, addr = server.accept()
+    print(addr, "connected to server")
+
+    while True:
+        msg = conn.recv(1024).decode()
+        print("\nClient:", msg)
+
+        reply = input("Server >> ")
+        conn.send(reply.encode())
+
+def run_client():
+    client = socket.socket()
+    host = socket.gethostname()
+    port = 8080
+
+    client.connect((host, port))
+    print("Connected to server")
+
+    while True:
+        msg = input("Client >> ")
+        client.send(msg.encode())
+
+        reply = client.recv(1024).decode()
+        print("Server:", reply)
+threading.Thread(target=run_server).start()
+threading.Thread(target=run_client).start()
+```
+## output:
+<img width="1920" height="708" alt="Screenshot (131)" src="https://github.com/user-attachments/assets/381901b3-1fee-45a2-84fa-6ed2200ea47c" />
 
 ## Result:
 
